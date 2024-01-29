@@ -38,7 +38,7 @@ interface User {
 const customDriver = new JSONDriver<User>('path-to-your-data');
 
 // Instantiate a new MegDB with the CustomDriver
-const megDB = new MegDB<User>(customDriver);
+const megDB = new Megdb<User>(customDriver);
 
 // Utilize the MegDB instance
 async function main() {
@@ -97,7 +97,7 @@ export class CustomDriver<T> extends BaseDriver<T> {
 A built-in driver for storing data in a JSON file.
 
 ```typescript
-import { MegDB } from 'meg.db-light';
+import { Megdb } from 'meg.db-light';
 import { JSONDriver } from 'megdb/drivers/JSONDriver';
 
 // Define a type for the data
@@ -111,7 +111,7 @@ interface User {
 const jsonDriver = new JSONDriver<User>('users.json');
 
 // Instantiate a new MegDB with the JSONDriver
-const megDB = new MegDB<User>(jsonDriver);
+const megDB = new Megdb<User>(jsonDriver);
 
 // Utilize the MegDB instance
 async function main() {
