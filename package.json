@@ -1,0 +1,35 @@
+{
+  "name": "meg.db-light",
+  "version": "1.0.0",
+  "description": "MegDB-light, A lightweight TypeScript database module providing a type-safe API for efficient data storage and retrieval. Easily extendable with custom drivers, including a built-in JSONDriver.",
+  "main": "lib/main.js",
+  "scripts": {
+    "test:general": "ts-node tests/generalTest.ts",
+    "test:benchmark": "ts-node tests/benchmark.ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MegalithOfficial/meg.db-light.git"
+  },
+  "keywords": [
+    "database",
+    "json",
+    "hackable",
+    "simple",
+    "fast",
+    "discord",
+    "lightweight",
+    "flexable"
+  ],
+  "author": "MegalithOfficial",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/MegalithOfficial/meg.db-light/issues"
+  },
+  "homepage": "https://github.com/MegalithOfficial/meg.db-light#readme",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "write-file-atomic": "^5.0.1"
+  }
+}
