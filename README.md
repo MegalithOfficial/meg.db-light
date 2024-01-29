@@ -15,7 +15,7 @@ MegDB-light is a robust, lightweight database module crafted in TypeScript. It o
 You can incorporate MegDB-light into your TypeScript project by installing it via npm:
 
 ```bash
-npm install megdb-light
+npm install meg.db-light
 ```
 
 ## How to Use
@@ -25,7 +25,7 @@ npm install megdb-light
 The `Megdb` class offers a high-level API for data interaction.
 
 ```typescript
-import { Megdb, JSONDriver } from 'megdb-light';
+import { Megdb, JSONDriver } from 'meg.db-light';
 
 // Define a type for the data
 interface User {
@@ -73,7 +73,7 @@ main();
 You can create your custom driver by extending the `BaseDriver` class and implementing the `loadData` and `saveData` methods.
 
 ```typescript
-import { BaseDriver } from 'megdb-light';
+import { BaseDriver } from 'meg.db-light';
 
 export class CustomDriver<T> extends BaseDriver<T> {
     constructor(filePath: string) {
@@ -97,7 +97,7 @@ export class CustomDriver<T> extends BaseDriver<T> {
 A built-in driver for storing data in a JSON file.
 
 ```typescript
-import { MegDB } from 'megdb-light';
+import { MegDB } from 'meg.db-light';
 import { JSONDriver } from 'megdb/drivers/JSONDriver';
 
 // Define a type for the data
