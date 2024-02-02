@@ -1,6 +1,6 @@
 {
   "name": "meg.db-light",
-  "version": "1.0.0-2",
+  "version": "1.1.0",
   "description": "MegDB-light, A lightweight TypeScript database module providing a type-safe API for efficient data storage and retrieval. Easily extendable with custom drivers, including a built-in JSONDriver.",
   "main": "lib/main.js",
   "scripts": {
