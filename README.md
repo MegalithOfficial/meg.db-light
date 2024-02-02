@@ -32,37 +32,58 @@ interface User {
     name: string;
     age: number;
     hobbies: string[];
-}
+};
 
-// Instantiate a new JSONDriver
-const customDriver = new JSONDriver<User>('path-to-your-data');
+interface format {
+    "john": User;
+};
 
-// Instantiate a new MegDB with the CustomDriver
-const megDB = new Megdb<User>(customDriver);
+// Create a new JSONDriver instance
+const jsonDriver = new JSONDriver<format>('users.json');
 
-// Utilize the MegDB instance
+// Create a new Megdb instance with the JSONDriver instance
+const megDB = new Megdb<format>(jsonDriver);
+
+// Use the MegDB instance
 async function main() {
     // Set a value
-    await megDB.set('JohnDoe.name', 'John Doe');
-    await megDB.set('JohnDoe.age', 25);
-    await megDB.set('JohnDoe.hobbies', ['reading', 'gaming']);
+    await megDB.set('john', { name: 'John Doe', age: 30, hobbies: ['reading', 'coding'] });
 
     // Get a value
-    const name = await megDB.get('JohnDoe.name');
-    console.log(name);  // Outputs: John Doe
+    const john = await megDB.get('john.name');
+    console.log(john.name);  // Outputs: John Doe
 
-    // Add a value
-    await megDB.add('JohnDoe.age', 1);
+    // Update a value
+    await megDB.add('john.age', 1);
 
     // Get the updated value
-    const age = await megDB.get('JohnDoe.age');
-    console.log(age);  // Outputs: 26
+    const updatedJohn = await megDB.get('john.age');
+    console.log(updatedJohn);  // Outputs: 31
 
-    // Other operations...
+    // Push a value into an array
+    await megDB.push('john.hobbies', "gaming");
+
+    // Get the updated array
+    const updatedHobbies = await megDB.get('john.hobbies');
+    console.log(updatedHobbies);  // Outputs: ['reading', 'coding', 'gaming']
+
+    // Pull a value from an array
+    await megDB.filter('john', hobby => hobby !== 'coding');
+
+    // Get the updated array
+    const finalHobbies = await megDB.get('john.hobbies');
+    console.log(finalHobbies);  // Outputs: ['reading', 'gaming']
+
+    // Delete a value
+    await megDB.delete('john.age');
+
+    // Try to get the deleted value
+    const deletedValue = await megDB.get('john.age');
+    console.log(deletedValue);  // Outputs: undefined
 
     // Get all data
     const allData = await megDB.all();
-    console.log(allData);
+    console.log(allData);  // Outputs: { john: { name: 'John Doe', hobbies: ['reading', 'gaming'] } }
 }
 
 main();
@@ -105,13 +126,17 @@ interface User {
     name: string;
     age: number;
     hobbies: string[];
-}
+};
 
-// Instantiate a new JSONDriver
-const jsonDriver = new JSONDriver<User>('users.json');
+interface format {
+    "john": User;
+};
 
-// Instantiate a new MegDB with the JSONDriver
-const megDB = new Megdb<User>(jsonDriver);
+// Create a new JSONDriver instance
+const jsonDriver = new JSONDriver<format>('users.json');
+
+// Create a new Megdb instance with the JSONDriver instance
+const megDB = new Megdb<format>(jsonDriver);
 
 // Utilize the MegDB instance
 async function main() {
