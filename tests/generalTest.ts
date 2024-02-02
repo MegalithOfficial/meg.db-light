@@ -8,54 +8,57 @@ interface User {
     hobbies: string[];
 };
 
+interface format {
+    "john": User;
+};
+
 // Create a new JSONDriver instance
-const jsonDriver = new JSONDriver<User>('users.json');
+const jsonDriver = new JSONDriver<format>('users.json');
 
 // Create a new Megdb instance with the JSONDriver instance
-const megDB = new Megdb<User>(jsonDriver);
+const megDB = new Megdb<format>(jsonDriver);
 
 // Use the MegDB instance
 async function main() {
     // Set a value
-    await megDB.set('name', 'John Doe');
-    await megDB.set('age', 30);
-    await megDB.set('hobbies', ['reading', 'coding']);
+    await megDB.set('john', { name: 'John Doe', age: 30, hobbies: ['reading', 'coding'] });
 
     // Get a value
-    const name = await megDB.get('name');
-    console.log(name);  // Outputs: John Doe
+    const john = await megDB.get('john.name');
+    console.log(john.name);  // Outputs: John Doe
 
-    // Add a value
-    await megDB.add('age', 1);
+    // Update a value
+    await megDB.add('john.age', 1);
 
     // Get the updated value
-    const age = await megDB.get('age');
-    console.log(age);  // Outputs: 31
+    const updatedJohn = await megDB.get('john.age');
+    console.log(updatedJohn);  // Outputs: 31
 
     // Push a value into an array
-    await megDB.push('hobbies', 'gaming');
+    await megDB.push('john.hobbies', "gaming");
 
     // Get the updated array
-    const hobbies = await megDB.get('hobbies');
-    console.log(hobbies);  // Outputs: ['reading', 'coding', 'gaming']
+    const updatedHobbies = await megDB.get('john.hobbies');
+    console.log(updatedHobbies);  // Outputs: ['reading', 'coding', 'gaming']
 
     // Pull a value from an array
-    await megDB.pull('hobbies', 'coding');
+    await megDB.filter('john', hobby => hobby !== 'coding');
 
     // Get the updated array
-    const updatedHobbies = await megDB.get('hobbies');
-    console.log(updatedHobbies);  // Outputs: ['reading', 'gaming']
+    const finalHobbies = await megDB.get('john.hobbies');
+    console.log(finalHobbies);  // Outputs: ['reading', 'gaming']
 
     // Delete a value
-    await megDB.delete('age');
+    await megDB.delete('john.age');
 
     // Try to get the deleted value
-    const deletedValue = await megDB.get('age');
+    const deletedValue = await megDB.get('john.age');
     console.log(deletedValue);  // Outputs: undefined
 
     // Get all data
     const allData = await megDB.all();
-    console.log(allData);  // Outputs: { JohnDoe: { name: 'John Doe', hobbies: ['reading', 'gaming'] } }
+    console.log(allData);  // Outputs: { john: { name: 'John Doe', hobbies: ['reading', 'gaming'] } }
 }
+
 
 main();
