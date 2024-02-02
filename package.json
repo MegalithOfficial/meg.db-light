@@ -6,7 +6,8 @@
   "scripts": {
     "test:general": "ts-node tests/generalTest.ts",
     "test:benchmark": "ts-node tests/benchmark.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
