@@ -32,5 +32,9 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "write-file-atomic": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "@types/write-file-atomic": "^4.0.3"
   }
 }
