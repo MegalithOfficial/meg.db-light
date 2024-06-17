@@ -37,7 +37,7 @@ export class Megdb<T> {
         await this.driver.saveData({} as any);
     };
 
-    public async typeof<K extends keyof T>(key: K): Promise<string> {
+    public async typeof<K extends Path<T>>(key: K): Promise<string> {
         const userObject = await this.get(key);
 
         if (userObject !== null && userObject !== undefined) {
@@ -76,11 +76,12 @@ export class Megdb<T> {
     public async pull<K extends Path<T>, U>(path: K, value: PathValue<T, K> extends Array<infer I> ? I : never): Promise<void> {
         const data = await this.driver.loadData();
         const currentArray = _.get(data, path, []);
-        if (Array.isArray(currentArray)) {
-            _.pull(currentArray, value);
-            _.set(data as object, path, currentArray);
-            await this.driver.saveData(data);
-        };
+        if (!Array.isArray(currentArray)) {
+            throw new Error(`Cannot perform 'pull' operation on non-array property '${path as string}'.`);
+        }
+        _.pull(currentArray, value);
+        _.set(data as object, path, currentArray);
+        await this.driver.saveData(data);
     };
 
     public async filter<K extends Path<T>>(path: K, predicate: (value: PathValue<T, K> extends Array<infer I> ? I : never) => boolean): Promise<void> {
@@ -96,4 +97,4 @@ export class Megdb<T> {
     public async all(): Promise<T> {
         return await this.driver.loadData();
     };
-}
+};

@@ -44,14 +44,13 @@ const jsonDriver = new JSONDriver<format>('users.json');
 // Create a new Megdb instance with the JSONDriver instance
 const megDB = new Megdb<format>(jsonDriver);
 
-// Use the MegDB instance
 async function main() {
     // Set a value
     await megDB.set('john', { name: 'John Doe', age: 30, hobbies: ['reading', 'coding'] });
 
     // Get a value
-    const john = await megDB.get('john.name');
-    console.log(john.name);  // Outputs: John Doe
+    const john = await megDB.get('john');
+    console.log(john!.name);  // Outputs: John Doe
 
     // Update a value
     await megDB.add('john.age', 1);
@@ -68,7 +67,7 @@ async function main() {
     console.log(updatedHobbies);  // Outputs: ['reading', 'coding', 'gaming']
 
     // Pull a value from an array
-    await megDB.filter('john', hobby => hobby !== 'coding');
+    await megDB.filter('john.hobbies', hobby => hobby !== 'coding');
 
     // Get the updated array
     const finalHobbies = await megDB.get('john.hobbies');
@@ -81,10 +80,18 @@ async function main() {
     const deletedValue = await megDB.get('john.age');
     console.log(deletedValue);  // Outputs: undefined
 
+    // Get the type of the 'john.hobbies' property
+    const typeofhobbies = await megDB.typeof('john.hobbies');
+    console.log(typeofhobbies); // Outputs: object
+
+    // Get the type of the 'john.name' property
+    const typeofname = await megDB.typeof('john.name');
+    console.log(typeofname); // Outputs: string
+
     // Get all data
     const allData = await megDB.all();
     console.log(allData);  // Outputs: { john: { name: 'John Doe', hobbies: ['reading', 'gaming'] } }
-}
+};
 
 main();
 ```
@@ -138,7 +145,6 @@ const jsonDriver = new JSONDriver<format>('users.json');
 // Create a new Megdb instance with the JSONDriver instance
 const megDB = new Megdb<format>(jsonDriver);
 
-// Utilize the MegDB instance
 async function main() {
     // Operations with MegDB...
 }

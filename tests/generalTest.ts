@@ -55,10 +55,17 @@ async function main() {
     const deletedValue = await megDB.get('john.age');
     console.log(deletedValue);  // Outputs: undefined
 
+    // Get the type of the 'john.hobbies' property
+    const typeofhobbies = await megDB.typeof('john.hobbies');
+    console.log(typeofhobbies); // Outputs: object
+
+    // Get the type of the 'john.name' property
+    const typeofname = await megDB.typeof('john.name');
+    console.log(typeofname); // Outputs: string
+
     // Get all data
     const allData = await megDB.all();
     console.log(allData);  // Outputs: { john: { name: 'John Doe', hobbies: ['reading', 'gaming'] } }
 }
-
 
 main();
