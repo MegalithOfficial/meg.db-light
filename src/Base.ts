@@ -11,7 +11,7 @@ export class Megdb<T> {
         this.driver = driver;
     };
 
-    public async get<K extends Path<T>>(path: K): Promise<any> {
+    public async get<K extends Path<T>>(path: K): Promise<PathValue<T, K> | undefined> {
         const data = await this.driver.loadData();
         return _.get(data, path);
     };
@@ -85,10 +85,10 @@ export class Megdb<T> {
 
     public async filter<K extends Path<T>>(path: K, predicate: (value: PathValue<T, K> extends Array<infer I> ? I : never) => boolean): Promise<void> {
         const data = await this.driver.loadData();
-        const currentArray = _.get(data, path, []);
+        const currentArray = _.get(data, path) as Array<any>;
         if (Array.isArray(currentArray)) {
-            const filteredArray = currentArray.filter(predicate);
-            _.set(data as object, path, filteredArray);
+            const filteredArray = currentArray.filter(item => predicate(item));
+            _.set(data, path, filteredArray);
             await this.driver.saveData(data);
         };
     };
