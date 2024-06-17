@@ -24,8 +24,8 @@ async function main() {
     await megDB.set('john', { name: 'John Doe', age: 30, hobbies: ['reading', 'coding'] });
 
     // Get a value
-    const john = await megDB.get('john.name');
-    console.log(john.name);  // Outputs: John Doe
+    const john = await megDB.get('john');
+    console.log(john!.name);  // Outputs: John Doe
 
     // Update a value
     await megDB.add('john.age', 1);
@@ -42,7 +42,7 @@ async function main() {
     console.log(updatedHobbies);  // Outputs: ['reading', 'coding', 'gaming']
 
     // Pull a value from an array
-    await megDB.filter('john', hobby => hobby !== 'coding');
+    await megDB.filter('john.hobbies', hobby => hobby !== 'coding');
 
     // Get the updated array
     const finalHobbies = await megDB.get('john.hobbies');

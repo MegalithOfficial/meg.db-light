@@ -2,17 +2,15 @@ import { JSONDriver } from '../src/drivers/JSONDriver';
 import { Megdb } from '../src/Base';
 
 // Define a type for the data
-interface User {
-    name: string;
-    age: number;
-    hobbies: string[];
+interface format {
+    [key: string]: string
 }
 
 // Create a new JSONDriver instance
-const jsonDriver = new JSONDriver<User>('benchmark.json');
+const jsonDriver = new JSONDriver<format>('benchmark.json');
 
 // Create a new MegDB instance with the JSONDriver instance
-const megDB = new Megdb<User>(jsonDriver);
+const megDB = new Megdb<format>(jsonDriver);
 
 // Benchmark function to measure the performance of set and get operations
 async function benchmark() {
@@ -20,12 +18,12 @@ async function benchmark() {
 
     // Perform a large number of set operations
     for (let i = 0; i < 1000; i++) {
-        await megDB.set(`name`, `name`);
+        await megDB.set(`count-${i}`, `count-${i}`);
     }
 
     // Perform a large number of get operations
     for (let i = 0; i < 1000; i++) {
-        await megDB.get(`name`);
+        await megDB.get(`count-${i}`);
     }
 
     const endTime = new Date().getTime();
