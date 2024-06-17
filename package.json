@@ -6,8 +6,7 @@
   "scripts": {
     "test:general": "ts-node tests/generalTest.ts",
     "test:benchmark": "ts-node tests/benchmark.ts",
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,9 @@
   },
   "homepage": "https://github.com/MegalithOfficial/meg.db-light#readme",
   "dependencies": {
-    "lodash": "^4.17.21",
-    "write-file-atomic": "^5.0.1"
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24"
   }
 }

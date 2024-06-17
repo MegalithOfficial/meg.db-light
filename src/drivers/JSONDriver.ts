@@ -1,7 +1,5 @@
-import * as fs from 'fs/promises';
-import writeFileAtomic from 'write-file-atomic';
+import * as fs from 'fs';
 import { BaseDriver } from './baseDriver';
-
 
 export class JSONDriver<T> extends BaseDriver<T> {
     private data: T | undefined;
@@ -10,17 +8,33 @@ export class JSONDriver<T> extends BaseDriver<T> {
         super(filePath);
     }
 
-    public async loadData(): Promise<T> {
-        try {
-            const fileContent = await fs.readFile(this.filePath, 'utf-8');
-            this.data = JSON.parse(fileContent) as T;
-        } catch (error) {
-            this.data = {} as T;
-        }
-        return this.data;
+    public loadData(): Promise<T> {
+        return new Promise((resolve, reject) => {
+            fs.readFile(this.filePath, 'utf-8', (error, fileContent) => {
+                if (error) {
+                    this.data = {} as T;
+                    resolve(this.data);
+                } else {
+                    try {
+                        this.data = JSON.parse(fileContent) as T;
+                        resolve(this.data);
+                    } catch (parseError) {
+                        reject(parseError);
+                    }
+                }
+            });
+        });
     }
 
-    public async saveData(data: T): Promise<void> {
-        await writeFileAtomic(this.filePath, JSON.stringify(data));
+    public saveData(data: T): Promise<void> {
+        return new Promise((resolve, reject) => {
+            fs.writeFile(this.filePath, JSON.stringify(data), (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 }

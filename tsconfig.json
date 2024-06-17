@@ -20,4 +20,4 @@
       "emitDecoratorMetadata": true
     },
     "exclude": ["node_modules", "lib", "tests"]
-  } //  GPL-3.0-or-later
+  }
